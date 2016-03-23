@@ -12,25 +12,52 @@ var neighbourMap = neighbourMap || {};
 
   var ViewModel = function() {
     var self = this;
-    self.placeListVisible = ko.observable(false);
 
-    self.placeList = ko.observableArray([]);
+    // List view. Not visible to start with
+    self.listVisible = ko.observable(false);
+    // Initialize observable array that will contain only the places which match the filter
+    self.filteredPlaceList = ko.observableArray([]);
 
+    // Populate a normal array with all the places defined in the model
+    self.placeList = [];
     neighbourMap.model.initialPlaces.forEach(function(place) {
       self.placeList.push(new Place(place));
     });
 
-    self.togglePlaceListVisible = function() {
-      if (self.placeListVisible()) {
-        self.placeListVisible(false);
+    // Function called when hamburger icon clicked
+    self.toggleListVisible = function() {
+      if (self.listVisible()) {
+        self.listVisible(false);
       } else {
-        self.placeListVisible(true);
+        self.listVisible(true);
       }
     };
 
-    this.currentPlace = ko.observable(this.placeList()[0]);
+    // Initialize text in filter input
+    self.filterText = ko.observable('');
 
-    this.selectPlace = function(clickedPlace) {
+    // Function called whenever anything is typed into Filter field
+    // Clears filteredPlaceList observable array and repopulates with only
+    // entries that match text typed in Filter field
+    // TODO: Need to look at removing markers too
+    self.filterPlaceList = function() {
+      self.filteredPlaceList.removeAll();
+      self.placeList.forEach(function (place) {
+        // console.log(self.filterText(), place.name(), place.name().search(self.filterText()));
+        if (place.name().search(self.filterText()) > -1) {
+          self.filteredPlaceList.push(place);
+        }
+      });
+    };
+
+    // Run function for initial list (copies all places into filteredPlaceList array)
+    self.filterPlaceList();
+
+    self.currentPlace = ko.observable(this.filteredPlaceList()[0]);
+
+    // Function called when a place name in the list is clicked
+    // Results in data being displayed on map. Same as if the marker had been clicked
+    self.selectPlace = function(clickedPlace) {
       self.currentPlace(clickedPlace);
       console.log(self.currentPlace());
       neighbourMap.viewMap.getData(self.currentPlace());

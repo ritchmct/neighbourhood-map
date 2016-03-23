@@ -64,7 +64,7 @@ var neighbourMap = neighbourMap || {};
   // Set up initial places
 
   o.model.city = 'Edinburgh';
-  o.model.countryCode = 'FR';
+  o.model.countryCode = 'GB';
   o.model.centerLocation = { lat: +55.95, lng: -3.21 };
 
   o.model.initialPlaces = [{

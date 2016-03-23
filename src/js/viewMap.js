@@ -33,7 +33,7 @@ var neighbourMap = neighbourMap || {};
     });
 
     // Create a marker for each place in the placeList
-    neighbourMap.viewModel.ViewModel.placeList().forEach(function(place) {
+    neighbourMap.viewModel.ViewModel.placeList.forEach(function(place) {
       place.marker = new google.maps.Marker({
         position: place.location,
         map: map,
