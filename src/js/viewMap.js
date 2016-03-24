@@ -33,7 +33,7 @@ var neighbourMap = neighbourMap || {};
     });
 
     // Create a marker for each place in the placeList
-    neighbourMap.viewModel.ViewModel.placeList.forEach(function(place) {
+    neighbourMap.viewModel.ViewModel.filteredPlaceList().forEach(function(place) {
       place.marker = new google.maps.Marker({
         position: place.location,
         map: map,
@@ -67,8 +67,9 @@ var neighbourMap = neighbourMap || {};
   }
 
   function yelpSuccess(data) {
-    console.log(data);
+    // console.log(data);
     infoWindow.setContent('<h1>' + data.businesses[0].display_phone + '</h1>');
+    // yelpInfoWindow();
     // console.log(infoWindow.getContent());
     infoWindow.open(map, marker);
     // var output = JSON.stringify(data, null, 2);
@@ -79,5 +80,13 @@ var neighbourMap = neighbourMap || {};
     infoWindow.setContent('<p>Failed to retrieve data from yelp</p>');
     infoWindow.open(map, marker);
   }
+
+  function yelpInfoWindow() {
+    // var phone =
+    var content = document.createElement('div');
+    content.className = "yelpInfoWindow";
+    $(".yelpInfoWindow").append("<p>test</p>");
+    console.log(content);
+  };
 
 })(neighbourMap);

@@ -69,10 +69,22 @@ var neighbourMap = neighbourMap || {};
 
   o.model.initialPlaces = [{
     name: 'Dean Gallery',
-    location: { lat: +55.94, lng: -3.22 }
+    location: { lat: +55.95187295, lng: -3.22418422 }
   }, {
     name: 'Edinburgh Castle',
-    location: { lat: +55.95, lng: -3.19 }
+    location: { lat: +55.9485947, lng: -3.1999135 }
+  }, {
+    name: 'Arthur Seat',
+    location: { lat: +55.9440833, lng: -3.1618333 }
+  }, {
+    name: 'Gallery of Modern Art',
+    location: { lat: +55.9509239, lng: -3.22784275 }
+  }, {
+    name: 'Scott Monument',
+    location: { lat: +55.952381, lng: -3.1932741 }
+  }, {
+    name: 'Dynamic Earth',
+    location: { lat: +55.9505575, lng: -3.1744426 }
   }];
 
 })(neighbourMap);

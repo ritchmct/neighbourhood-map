@@ -19,10 +19,25 @@ var neighbourMap = neighbourMap || {};
     self.filteredPlaceList = ko.observableArray([]);
 
     // Populate a normal array with all the places defined in the model
-    self.placeList = [];
+    var placeList = [];
     neighbourMap.model.initialPlaces.forEach(function(place) {
-      self.placeList.push(new Place(place));
+      placeList.push(new Place(place));
     });
+
+    // Sort the array of places by place name
+    var placeNames = [];
+    placeList.forEach(function (place) {
+      placeNames.push(place.name());
+    });
+    var temp = [];
+    placeNames.sort().forEach(function (name) {
+      placeList.forEach(function(place) {
+        if (name === place.name()) {
+          temp.push(place);
+        }
+      });
+    });
+    placeList = temp;
 
     // Function called when hamburger icon clicked
     self.toggleListVisible = function() {
@@ -42,7 +57,7 @@ var neighbourMap = neighbourMap || {};
     // TODO: Need to look at removing markers too
     self.filterPlaceList = function() {
       self.filteredPlaceList.removeAll();
-      self.placeList.forEach(function (place) {
+      placeList.forEach(function (place) {
         // console.log(self.filterText(), place.name(), place.name().search(self.filterText()));
         if (place.name().search(self.filterText()) > -1) {
           self.filteredPlaceList.push(place);
@@ -53,14 +68,14 @@ var neighbourMap = neighbourMap || {};
     // Run function for initial list (copies all places into filteredPlaceList array)
     self.filterPlaceList();
 
-    self.currentPlace = ko.observable(this.filteredPlaceList()[0]);
+    // self.currentPlace = ko.observable(this.filteredPlaceList()[0]);
 
     // Function called when a place name in the list is clicked
     // Results in data being displayed on map. Same as if the marker had been clicked
     self.selectPlace = function(clickedPlace) {
-      self.currentPlace(clickedPlace);
-      console.log(self.currentPlace());
-      neighbourMap.viewMap.getData(self.currentPlace());
+      // self.currentPlace(clickedPlace);
+      console.log(clickedPlace);
+      neighbourMap.viewMap.getData(clickedPlace);
     };
   };
 
