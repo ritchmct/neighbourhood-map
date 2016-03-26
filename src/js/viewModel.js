@@ -24,20 +24,12 @@ var neighbourMap = neighbourMap || {};
       placeList.push(new Place(place));
     });
 
-    // Sort the array of places by place name
-    var placeNames = [];
-    placeList.forEach(function (place) {
-      placeNames.push(place.name());
+    // Sort array of places by place name
+    placeList.sort(function(l, r) {
+      var x = l.name();
+      var y = r.name();
+      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
     });
-    var temp = [];
-    placeNames.sort().forEach(function (name) {
-      placeList.forEach(function(place) {
-        if (name === place.name()) {
-          temp.push(place);
-        }
-      });
-    });
-    placeList = temp;
 
     // Function called when hamburger icon clicked
     self.toggleListVisible = function() {
@@ -74,7 +66,7 @@ var neighbourMap = neighbourMap || {};
     // Results in data being displayed on map. Same as if the marker had been clicked
     self.selectPlace = function(clickedPlace) {
       // self.currentPlace(clickedPlace);
-      console.log(clickedPlace);
+      // console.log(clickedPlace);
       neighbourMap.viewMap.getData(clickedPlace);
     };
   };

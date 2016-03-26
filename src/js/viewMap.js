@@ -51,7 +51,7 @@ var neighbourMap = neighbourMap || {};
 
   // This function needs global visibility as it is called from viewModel too
   o.viewMap.getData = function(place) {
-    console.log(place);
+    // console.log(place);
     marker = place.marker;
     toggleBounce(marker);
     neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, yelpFail);
@@ -67,8 +67,22 @@ var neighbourMap = neighbourMap || {};
   }
 
   function yelpSuccess(data) {
-    // console.log(data);
-    infoWindow.setContent('<h1>' + data.businesses[0].display_phone + '</h1>');
+    console.log(data);
+    var e0 = data.businesses[0];
+    // TODO: look at best way to handle undefined values
+    var content = {
+      name: e0.name,
+      phone: e0.display_phone,
+      imgUrl: e0.image_url,
+      imgRatingUrl: e0.rating_img_url_small,
+      address: e0.location.address[0]
+    };
+    var formattedContent = '<div id="iw-main">';
+    formattedContent += '<div id="iw-image"><img src="' + content.imgUrl + '"></div>';
+    formattedContent += '<div><ul><li>' + content.name + '</li></ul></div>';
+    formattedContent += '</div>';
+    console.log(formattedContent);
+    infoWindow.setContent(formattedContent);
     // yelpInfoWindow();
     // console.log(infoWindow.getContent());
     infoWindow.open(map, marker);

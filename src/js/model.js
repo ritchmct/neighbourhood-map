@@ -23,7 +23,7 @@ var neighbourMap = neighbourMap || {};
       'parameters': parameters
     };
 
-    console.log(message);
+    // console.log(message);
 
     OAuth.setTimestampAndNonce(message);
     OAuth.SignatureMethod.sign(message, {
