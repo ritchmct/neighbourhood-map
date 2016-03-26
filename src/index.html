@@ -27,8 +27,8 @@
       <div id="filter-list">Filter:
         <input id="filter" type="text" data-bind="textInput: filterText, event: {keyup: filterPlaceList}">
       </div>
-      <ul id="place-list" data-bind="foreach: filteredPlaceList">
-        <li data-bind="text: name, click: $parent.selectPlace"></li>
+      <ul id="place-list" data-bind="foreach: placeList">
+        <li data-bind="text: name, click: $parent.selectPlace, visible: visible"></li>
       </ul>
     </div>
   </div>

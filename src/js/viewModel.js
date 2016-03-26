@@ -8,6 +8,7 @@ var neighbourMap = neighbourMap || {};
   var Place = function(data) {
     this.name = ko.observable(data.name);
     this.location = data.location;
+    this.visible = ko.observable(true);
   };
 
   var ViewModel = function() {
@@ -16,16 +17,16 @@ var neighbourMap = neighbourMap || {};
     // List view. Not visible to start with
     self.listVisible = ko.observable(false);
     // Initialize observable array that will contain only the places which match the filter
-    self.filteredPlaceList = ko.observableArray([]);
+    // self.filteredPlaceList = ko.observableArray([]);
 
     // Populate a normal array with all the places defined in the model
-    var placeList = [];
+    self.placeList = ko.observableArray();
     neighbourMap.model.initialPlaces.forEach(function(place) {
-      placeList.push(new Place(place));
+      self.placeList.push(new Place(place));
     });
 
     // Sort array of places by place name
-    placeList.sort(function(l, r) {
+    self.placeList.sort(function(l, r) {
       var x = l.name();
       var y = r.name();
       return ((x < y) ? -1 : ((x > y) ? 1 : 0));
@@ -48,17 +49,18 @@ var neighbourMap = neighbourMap || {};
     // entries that match text typed in Filter field
     // TODO: Need to look at removing markers too
     self.filterPlaceList = function() {
-      self.filteredPlaceList.removeAll();
-      placeList.forEach(function (place) {
+      self.placeList().forEach(function (place) {
         // console.log(self.filterText(), place.name(), place.name().search(self.filterText()));
         if (place.name().search(self.filterText()) > -1) {
-          self.filteredPlaceList.push(place);
+          place.visible(true);
+        } else {
+          place.visible(false);
         }
       });
     };
 
     // Run function for initial list (copies all places into filteredPlaceList array)
-    self.filterPlaceList();
+    // self.filterPlaceList();
 
     // self.currentPlace = ko.observable(this.filteredPlaceList()[0]);
 
