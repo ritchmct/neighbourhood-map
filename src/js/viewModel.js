@@ -53,6 +53,7 @@ var neighbourMap = neighbourMap || {};
           // Close the infoWindow if it is
           if (place.marker === neighbourMap.viewMap.infoWindowMarker) {
             neighbourMap.viewMap.infoWindow.close();
+            neighbourMap.viewMap.infoWindowMarker = null;
           }
         }
       });
