@@ -32,6 +32,9 @@ var neighbourMap = neighbourMap || {};
       content: 'No data to display'
     });
 
+    // Make infoWindow globally available to neighbourMap
+    o.viewMap.infoWindow = infoWindow;
+
     // Create a marker for each place in the placeList
     neighbourMap.viewModel.ViewModel.placeList().forEach(function(place) {
       place.marker = new google.maps.Marker({
@@ -51,8 +54,10 @@ var neighbourMap = neighbourMap || {};
 
   // This function needs global visibility as it is called from viewModel too
   o.viewMap.getData = function(place) {
-    // console.log(place);
     marker = place.marker;
+    // Create a neighbourMap global variable to reference marker
+    // that is currently associated with the infoWindow
+    o.viewMap.infoWindowMarker = marker;
     toggleBounce(marker);
     neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, yelpFail);
   }
@@ -86,6 +91,7 @@ var neighbourMap = neighbourMap || {};
     // yelpInfoWindow();
     // console.log(infoWindow.getContent());
     infoWindow.open(map, marker);
+    console.log(infoWindow);
     // var output = JSON.stringify(data, null, 2);
     // $("body").append(output);
   }

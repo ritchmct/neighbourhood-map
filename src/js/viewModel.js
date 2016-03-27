@@ -25,9 +25,7 @@ var neighbourMap = neighbourMap || {};
 
     // Sort array of places by place name
     self.placeList.sort(function(l, r) {
-      var x = l.name();
-      var y = r.name();
-      return ((x < y) ? -1 : ((x > y) ? 1 : 0));
+      return l.name().localeCompare(r.name());
     });
 
     // Function called when hamburger icon clicked
@@ -41,16 +39,21 @@ var neighbourMap = neighbourMap || {};
     self.filterText = ko.observable('');
 
     // Function called whenever anything is typed into Filter field
-    // Sets visibility of each item in list and marker on map
+    // Sets visibility of list items and map markers
+    // Closes infoWindow if it's marker is removed
     self.filterPlaceList = function() {
       self.placeList().forEach(function(place) {
-        console.log(place);
         if (place.name().search(self.filterText()) > -1) {
           place.visible(true);
           place.marker.setVisible(true);
         } else {
           place.visible(false);
           place.marker.setVisible(false);
+          // Check to see if the marker is currently associated with the infoWindow
+          // Close the infoWindow if it is
+          if (place.marker === neighbourMap.viewMap.infoWindowMarker) {
+            neighbourMap.viewMap.infoWindow.close();
+          }
         }
       });
     };
