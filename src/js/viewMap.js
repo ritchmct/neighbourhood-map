@@ -45,12 +45,14 @@ var neighbourMap = neighbourMap || {};
       });
 
       // When marker is clicked run a function to retrieve data
+      console.log(place.marker);
       place.marker.addListener('click', function() {
-        o.viewMap.getData(place);
+        console.log("marker clicked");
+        // o.viewMap.getData(place);
       });
 
     });
-  }
+  };
 
   // This function needs global visibility as it is called from viewModel too
   o.viewMap.getData = function(place) {
@@ -60,14 +62,14 @@ var neighbourMap = neighbourMap || {};
     o.viewMap.infoWindowMarker = marker;
     toggleBounce(marker);
     neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, yelpFail);
-  }
+  };
 
   function toggleBounce(marker) {
     if (marker.getAnimation() !== null) {
       marker.setAnimation(null);
     } else {
       marker.setAnimation(google.maps.Animation.BOUNCE);
-      setTimeout(function() { marker.setAnimation(null) }, 1400);
+      setTimeout(function() { marker.setAnimation(null); }, 1400);
     }
   }
 
@@ -84,8 +86,11 @@ var neighbourMap = neighbourMap || {};
     };
     var formattedContent = '<div id="iw-main">';
     formattedContent += '<div id="iw-image"><img src="' + content.imgUrl + '"></div>';
-    formattedContent += '<div><ul><li>' + content.name + '</li></ul></div>';
-    formattedContent += '</div>';
+    formattedContent += '<div id="iw-data"><ul><li>' + content.name + '</li>';
+    formattedContent += '<li><img src="' + content.imgRatingUrl + '"></li>';
+    formattedContent += '<li>' + content.phone + '</li>';
+    formattedContent += '<li>' + content.address + '</li>';
+    formattedContent += '</ul></div></div>';
     console.log(formattedContent);
     infoWindow.setContent(formattedContent);
     // yelpInfoWindow();
@@ -107,6 +112,6 @@ var neighbourMap = neighbourMap || {};
     content.className = "yelpInfoWindow";
     $(".yelpInfoWindow").append("<p>test</p>");
     console.log(content);
-  };
+  }
 
 })(neighbourMap);
