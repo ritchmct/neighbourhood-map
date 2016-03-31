@@ -48,7 +48,7 @@ var neighbourMap = neighbourMap || {};
       console.log(place.marker);
       place.marker.addListener('click', function() {
         console.log("marker clicked");
-        // o.viewMap.getData(place);
+        o.viewMap.getData(place);
       });
 
     });
@@ -82,15 +82,16 @@ var neighbourMap = neighbourMap || {};
       phone: e0.display_phone,
       imgUrl: e0.image_url,
       imgRatingUrl: e0.rating_img_url_small,
-      address: e0.location.address[0]
+      address: e0.location.display_address
     };
-    var formattedContent = '<div id="iw-main">';
-    formattedContent += '<div id="iw-image"><img src="' + content.imgUrl + '"></div>';
-    formattedContent += '<div id="iw-data"><ul><li>' + content.name + '</li>';
-    formattedContent += '<li><img src="' + content.imgRatingUrl + '"></li>';
-    formattedContent += '<li>' + content.phone + '</li>';
-    formattedContent += '<li>' + content.address + '</li>';
-    formattedContent += '</ul></div></div>';
+    var formattedContent = '<div id="iw-main"><div id="iw-header">';
+    formattedContent += '<h3>' + content.name + '</h3></div>';
+    formattedContent += '<div id="iw-data"><div id="iw-picture"><img src="' + content.imgUrl + '" ';
+    formattedContent += 'alt="Picture from yelp"></div>';
+    formattedContent += '<div id="iw-detail"><ul><li>Rating: <img src="' + content.imgRatingUrl + '"></li>';
+    formattedContent += '<li> Phone: ' + content.phone + '</li>';
+    formattedContent += '<li> Address: ' + content.address + '</li>';
+    formattedContent += '</ul></div></div></div>';
     console.log(formattedContent);
     infoWindow.setContent(formattedContent);
     // yelpInfoWindow();
