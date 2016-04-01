@@ -62,7 +62,7 @@ var neighbourMap = neighbourMap || {};
     // Function called when a place name in the list is clicked
     // Results in data being displayed on map. Same as if the marker had been clicked
     self.selectPlace = function(clickedPlace) {
-      neighbourMap.viewMap.getData(clickedPlace);
+      neighbourMap.viewMap.getData(clickedPlace, 'yelp');
     };
   };
 

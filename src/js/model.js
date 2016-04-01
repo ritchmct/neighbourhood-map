@@ -32,7 +32,7 @@ var neighbourMap = neighbourMap || {};
     });
 
     var parameterMap = OAuth.getParameterMap(message.parameters);
-    var yelpRequestTimeOut = setTimeout(function () { errorCb('Yelp'); }, 4000);
+    var yelpRequestTimeOut = setTimeout(function() { errorCb('Yelp'); }, 4000);
 
     $.ajax({
       'url': message.action,
@@ -48,20 +48,36 @@ var neighbourMap = neighbourMap || {};
     });
   };
 
-  o.model.fsRequest = function(name, successCb, errorCb) {
+  o.model.foursquareRequest = function(name, location, successCb, errorCb) {
 
+    var foursquareRequestTimeOut = setTimeout(function() { errorCb('Foursquare'); }, 4000);
     var url = 'https://api.foursquare.com/v2/venues/search';
-    var fsRequestTimeOut = setTimeout(function () { errorCb('Foursquare'); }, 4000);
+    var loc = location.lat + ',' + location.lng;
 
-    $.getJSON( url, {
+    $.getJSON(url, {
       client_id: foursquareKeys.client_id,
       client_secret: foursquareKeys.client_secret,
-      v: '20130815',
-      ll: '55.95,-3.21',
+      v: '20160301',
+      m: 'foursquare',
+      ll: loc,
+      limit: 1,
       query: name
     }).done(function(data) {
-      successCb(data);
-      clearTimeout(fsRequestTimeOut);
+      // Retrieve id from search request to use in specific request for venue
+      // The venue request will return the full object rather than just the compact object
+      var id = data.response.venues[0].id;
+      var url = 'https://api.foursquare.com/v2/venues/' + id;
+      $.getJSON(url, {
+        client_id: foursquareKeys.client_id,
+        client_secret: foursquareKeys.client_secret,
+        v: '20160301',
+        m: 'foursquare'
+      }).done(function(data) {
+        successCb(data);
+        clearTimeout(foursquareRequestTimeOut);
+      }).fail(function() {
+        errorCb('Foursquare');
+      });
     }).fail(function() {
       errorCb('Foursquare');
     });

@@ -103,6 +103,22 @@ body {
   flex-direction: column;
 }
 
+#iw-links {
+  display: inline-block;
+  text-align: right;
+  color: blue;
+}
+
+#iw-yelp {
+  /*color: blue;*/
+
+}
+
+#iw-foursquare {
+  padding-left: 10px;
+
+}
+
 #iw-header {
   display: block;
 }

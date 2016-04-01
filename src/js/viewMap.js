@@ -48,7 +48,7 @@ var neighbourMap = neighbourMap || {};
       console.log(place.marker);
       place.marker.addListener('click', function() {
         console.log("marker clicked");
-        o.viewMap.getData(place);
+        o.viewMap.getData(place, 'foursquare');
       });
 
     });
@@ -65,14 +65,20 @@ var neighbourMap = neighbourMap || {};
   }
 
   // This function needs global visibility as it is called from viewModel too
-  o.viewMap.getData = function(place) {
+  o.viewMap.getData = function(place, api) {
     marker = place.marker;
     // Create a neighbourMap global variable to reference marker
     // that is currently associated with the infoWindow
     o.viewMap.infoWindowMarker = marker;
     toggleBounce(marker);
-    // neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, requestFailed);
-    neighbourMap.model.fsRequest(place.name(), fsSuccess, requestFailed);
+    neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, requestFailed);
+    neighbourMap.model.foursquareRequest(place.name(), place.location, foursquareSuccess, requestFailed);
+    var formattedContent = '<div id="iw-main">';
+    formattedContent += '<div id="iw-links"><span id="iw-yelp">Yelp</span><span id="iw-foursquare">Foursquare</span></div>';
+    formattedContent += '</div>';
+    console.log(formattedContent);
+    infoWindow.setContent(formattedContent);
+    infoWindow.open(map, marker);
   };
 
   function yelpSuccess(data) {
@@ -86,40 +92,41 @@ var neighbourMap = neighbourMap || {};
       imgRatingUrl: e0.rating_img_url_small,
       address: e0.location.display_address
     };
-    var formattedContent = '<div id="iw-main"><div id="iw-header">';
-    formattedContent += '<h3>' + content.name + '</h3></div>';
+    var formattedContent = '<div id="iw-header"><h3>' + content.name + '</h3></div>';
     formattedContent += '<div id="iw-data"><div id="iw-picture"><img src="' + content.imgUrl + '" ';
     formattedContent += 'alt="Picture from yelp"></div>';
     formattedContent += '<div id="iw-detail"><ul><li>Rating: <img src="' + content.imgRatingUrl + '"></li>';
     formattedContent += '<li> Phone: ' + content.phone + '</li>';
     formattedContent += '<li> Address: ' + content.address + '</li>';
-    formattedContent += '</ul></div></div></div>';
-    console.log(formattedContent);
-    infoWindow.setContent(formattedContent);
-    // yelpInfoWindow();
-    // console.log(infoWindow.getContent());
-    infoWindow.open(map, marker);
-    console.log(infoWindow);
-    // var output = JSON.stringify(data, null, 2);
-    // $("body").append(output);
+    formattedContent += '</ul></div></div>';
+    $("#iw-main").append(formattedContent);
   }
 
-  function fsSuccess(data) {
+  function foursquareSuccess(data) {
     console.log(data);
+    var venue = data.response.venue;
+    // TODO: look at best way to handle undefined values
+    var content = {
+      name: venue.name,
+      phone: venue.contact.formattedPhone,
+      category: venue.categories[0].name,
+      imgUrl: venue.bestPhoto.prefix + '100x100' + venue.bestPhoto.suffix,
+      address: venue.location.formattedAddress
+    };
+    var formattedContent = '<div id="iw-header">';
+    formattedContent += '<h3>' + content.name + '</h3></div>';
+    formattedContent += '<div id="iw-data"><div id="iw-picture"><img src="' + content.imgUrl + '" ';
+    formattedContent += 'alt="Picture from foursquare"></div>';
+    formattedContent += '<div id="iw-detail"><ul><li>Category: ' + content.category + '</li>';
+    formattedContent += '<li> Phone: ' + content.phone + '</li>';
+    formattedContent += '<li> Address: ' + content.address + '</li>';
+    formattedContent += '</ul></div></div>';
+    $("#iw-main").append(formattedContent);
   }
 
   function requestFailed(data) {
     infoWindow.setContent('<p>Failed to retrieve data from ' + data + '</p>');
     infoWindow.open(map, marker);
-    // console.log('<p>Failed to retrieve data from yelp</p>');
-  }
-
-  function yelpInfoWindow() {
-    // var phone =
-    var content = document.createElement('div');
-    content.className = "yelpInfoWindow";
-    $(".yelpInfoWindow").append("<p>test</p>");
-    console.log(content);
   }
 
 })(neighbourMap);
