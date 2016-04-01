@@ -54,16 +54,7 @@ var neighbourMap = neighbourMap || {};
     });
   };
 
-  // This function needs global visibility as it is called from viewModel too
-  o.viewMap.getData = function(place) {
-    marker = place.marker;
-    // Create a neighbourMap global variable to reference marker
-    // that is currently associated with the infoWindow
-    o.viewMap.infoWindowMarker = marker;
-    toggleBounce(marker);
-    neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, yelpFail);
-  };
-
+  // Bounce the marker for a short period
   function toggleBounce(marker) {
     if (marker.getAnimation() !== null) {
       marker.setAnimation(null);
@@ -72,6 +63,17 @@ var neighbourMap = neighbourMap || {};
       setTimeout(function() { marker.setAnimation(null); }, 1400);
     }
   }
+
+  // This function needs global visibility as it is called from viewModel too
+  o.viewMap.getData = function(place) {
+    marker = place.marker;
+    // Create a neighbourMap global variable to reference marker
+    // that is currently associated with the infoWindow
+    o.viewMap.infoWindowMarker = marker;
+    toggleBounce(marker);
+    // neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, requestFailed);
+    neighbourMap.model.fsRequest(place.name(), fsSuccess, requestFailed);
+  };
 
   function yelpSuccess(data) {
     console.log(data);
@@ -102,9 +104,14 @@ var neighbourMap = neighbourMap || {};
     // $("body").append(output);
   }
 
-  function yelpFail() {
-    infoWindow.setContent('<p>Failed to retrieve data from yelp</p>');
+  function fsSuccess(data) {
+    console.log(data);
+  }
+
+  function requestFailed(data) {
+    infoWindow.setContent('<p>Failed to retrieve data from ' + data + '</p>');
     infoWindow.open(map, marker);
+    // console.log('<p>Failed to retrieve data from yelp</p>');
   }
 
   function yelpInfoWindow() {

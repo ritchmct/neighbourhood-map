@@ -32,7 +32,7 @@ var neighbourMap = neighbourMap || {};
     });
 
     var parameterMap = OAuth.getParameterMap(message.parameters);
-    var yelpRequestTimeOut = setTimeout(errorCb, 4000);
+    var yelpRequestTimeOut = setTimeout(function () { errorCb('Yelp'); }, 4000);
 
     $.ajax({
       'url': message.action,
@@ -44,9 +44,28 @@ var neighbourMap = neighbourMap || {};
       successCb(data);
       clearTimeout(yelpRequestTimeOut);
     }).fail(function() {
-      errorCb();
+      errorCb('Yelp');
     });
-  }
+  };
+
+  o.model.fsRequest = function(name, successCb, errorCb) {
+
+    var url = 'https://api.foursquare.com/v2/venues/search';
+    var fsRequestTimeOut = setTimeout(function () { errorCb('Foursquare'); }, 4000);
+
+    $.getJSON( url, {
+      client_id: foursquareKeys.client_id,
+      client_secret: foursquareKeys.client_secret,
+      v: '20130815',
+      ll: '55.95,-3.21',
+      query: name
+    }).done(function(data) {
+      successCb(data);
+      clearTimeout(fsRequestTimeOut);
+    }).fail(function() {
+      errorCb('Foursquare');
+    });
+  };
 
   // API keys
   var yelpKeys = {
@@ -56,7 +75,10 @@ var neighbourMap = neighbourMap || {};
     tokenSecret: 'fvH1r43u-IhRdZ_u01W5nSQZlP8'
   };
 
-  var foursquareKeys = {};
+  var foursquareKeys = {
+    client_id: 'XNFGKUAHSLQ2TNKIOFTURDIAYKR4M5S4ITGZCPFHMSYHEIRY',
+    client_secret: 'RYRV0TTFV0PMLGHRASNB3W1MCQA1WZVQIG3XXDL2ZM1PIJCO'
+  };
 
   o.model.googleMapsKey = 'AIzaSyBvTqqqQmN6DRkaYvp23R-_YZCSgzG6Itg';
 
