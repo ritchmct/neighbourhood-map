@@ -48,7 +48,7 @@ var neighbourMap = neighbourMap || {};
       console.log(place.marker);
       place.marker.addListener('click', function() {
         console.log("marker clicked");
-        o.viewMap.getData(place, 'foursquare');
+        o.viewMap.getData(place);
       });
 
     });
@@ -65,7 +65,7 @@ var neighbourMap = neighbourMap || {};
   }
 
   // This function needs global visibility as it is called from viewModel too
-  o.viewMap.getData = function(place, api) {
+  o.viewMap.getData = function(place) {
     marker = place.marker;
     // Create a neighbourMap global variable to reference marker
     // that is currently associated with the infoWindow
@@ -73,12 +73,34 @@ var neighbourMap = neighbourMap || {};
     toggleBounce(marker);
     neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, requestFailed);
     neighbourMap.model.foursquareRequest(place.name(), place.location, foursquareSuccess, requestFailed);
-    var formattedContent = '<div id="iw-main">';
-    formattedContent += '<div id="iw-links"><span id="iw-yelp">Yelp</span><span id="iw-foursquare">Foursquare</span></div>';
-    formattedContent += '</div>';
-    console.log(formattedContent);
+    var formattedContent = '<div class="iw-main"></div>';
     infoWindow.setContent(formattedContent);
     infoWindow.open(map, marker);
+    formattedContent = '<div class="iw-links"></div>';
+    $(".iw-main").append(formattedContent);
+    formattedContent = '<span id="iw-yelp">Yelp: </span>';
+    formattedContent += '<span id="iw-yelp-vis">hide</span>';
+    formattedContent += '<span id="iw-foursquare">Foursquare: </span>';
+    formattedContent += '<span id="iw-foursquare-vis">hide</span>';
+    $(".iw-links").append(formattedContent);
+    $("#iw-yelp-vis").on("click", function(e){
+      if (e.toElement.innerHTML === "show") {
+        $("#iw-yelp-data").show();
+        e.toElement.innerHTML = "hide";
+      } else {
+        $("#iw-yelp-data").hide();
+        e.toElement.innerHTML = "show";
+      }
+    });
+    $("#iw-foursquare-vis").on("click", function(e){
+      if (e.toElement.innerHTML === "show") {
+        $("#iw-foursquare-data").show();
+        e.toElement.innerHTML = "hide";
+      } else {
+        $("#iw-foursquare-data").hide();
+        e.toElement.innerHTML = "show";
+      }
+    });
   };
 
   function yelpSuccess(data) {
@@ -92,14 +114,15 @@ var neighbourMap = neighbourMap || {};
       imgRatingUrl: e0.rating_img_url_small,
       address: e0.location.display_address
     };
-    var formattedContent = '<div id="iw-header"><h3>' + content.name + '</h3></div>';
-    formattedContent += '<div id="iw-data"><div id="iw-picture"><img src="' + content.imgUrl + '" ';
+    var formattedContent = '<div id="iw-yelp-data">';
+    formattedContent += '<div class="iw-header"><h3>' + content.name + '</h3></div>';
+    formattedContent += '<div class="iw-data"><div class="iw-picture"><img src="' + content.imgUrl + '" ';
     formattedContent += 'alt="Picture from yelp"></div>';
-    formattedContent += '<div id="iw-detail"><ul><li>Rating: <img src="' + content.imgRatingUrl + '"></li>';
+    formattedContent += '<div class="iw-detail"><ul><li>Rating: <img src="' + content.imgRatingUrl + '"></li>';
     formattedContent += '<li> Phone: ' + content.phone + '</li>';
     formattedContent += '<li> Address: ' + content.address + '</li>';
-    formattedContent += '</ul></div></div>';
-    $("#iw-main").append(formattedContent);
+    formattedContent += '</ul></div></div></div>';
+    $(".iw-main").append(formattedContent);
   }
 
   function foursquareSuccess(data) {
@@ -113,15 +136,16 @@ var neighbourMap = neighbourMap || {};
       imgUrl: venue.bestPhoto.prefix + '100x100' + venue.bestPhoto.suffix,
       address: venue.location.formattedAddress
     };
-    var formattedContent = '<div id="iw-header">';
+    var formattedContent = '<div id="iw-foursquare-data">';
+    formattedContent += '<div class="iw-header">';
     formattedContent += '<h3>' + content.name + '</h3></div>';
-    formattedContent += '<div id="iw-data"><div id="iw-picture"><img src="' + content.imgUrl + '" ';
+    formattedContent += '<div class="iw-data"><div class="iw-picture"><img src="' + content.imgUrl + '" ';
     formattedContent += 'alt="Picture from foursquare"></div>';
-    formattedContent += '<div id="iw-detail"><ul><li>Category: ' + content.category + '</li>';
+    formattedContent += '<div class="iw-detail"><ul><li>Category: ' + content.category + '</li>';
     formattedContent += '<li> Phone: ' + content.phone + '</li>';
     formattedContent += '<li> Address: ' + content.address + '</li>';
-    formattedContent += '</ul></div></div>';
-    $("#iw-main").append(formattedContent);
+    formattedContent += '</ul></div></div></div>';
+    $(".iw-main").append(formattedContent);
   }
 
   function requestFailed(data) {
