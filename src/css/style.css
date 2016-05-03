@@ -1,5 +1,5 @@
 * {
-  box-sizing:border-box;
+  box-sizing: border-box;
 }
 
 html,
@@ -19,9 +19,7 @@ body {
   height: 100%;
 }
 
-#main {
-
-}
+#main {}
 
 #header {
   background-color: #FFF;
@@ -83,7 +81,6 @@ body {
   overflow-y: auto;
 }
 
-
 #place-list ul {
   list-style: none;
   padding: 0px;
@@ -103,23 +100,30 @@ body {
   flex-direction: column;
 }
 
+@media only screen and (max-width: 400px) {
+  .iw-main {
+    width: 250px;
+  }
+}
+
+@media only screen and (max-width: 350px) {
+  .iw-main {
+    width: 200px;
+  }
+}
+
 .iw-links {
   display: inline-block;
   text-align: right;
   color: blue;
 }
 
-#iw-yelp {
-  /*color: blue;*/
-
-}
-
 #iw-foursquare {
   padding-left: 10px;
-
 }
 
-#iw-yelp-vis, #iw-foursquare-vis {
+#iw-yelp-vis,
+#iw-foursquare-vis {
   text-decoration: underline;
 }
 
