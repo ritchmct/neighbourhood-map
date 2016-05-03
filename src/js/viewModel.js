@@ -63,6 +63,8 @@ var neighbourMap = neighbourMap || {};
     // Results in data being displayed on map. Same as if the marker had been clicked
     self.selectPlace = function(clickedPlace) {
       neighbourMap.viewMap.getData(clickedPlace);
+      // Remove the list so that it doesn't obstruct view of InfoWindow
+      self.listVisible(false);
     };
   };
 
