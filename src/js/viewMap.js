@@ -108,15 +108,14 @@ var neighbourMap = neighbourMap || {};
   };
 
   function yelpSuccess(data) {
-    console.log(data);
     var e0 = data.businesses[0];
     // TODO: look at best way to handle undefined values
     var content = {
-      name: e0.name,
-      phone: e0.display_phone,
+      name: e0.name || marker.title,
+      phone: e0.display_phone || "None",
       imgUrl: e0.image_url,
       imgRatingUrl: e0.rating_img_url_small,
-      address: e0.location.display_address
+      address: e0.location.display_address || "None"
     };
     var formattedContent = '<div id="iw-yelp-data">';
     formattedContent += '<div class="iw-header"><h3>' + content.name + '</h3></div>';
@@ -130,15 +129,14 @@ var neighbourMap = neighbourMap || {};
   }
 
   function foursquareSuccess(data) {
-    console.log(data);
     var venue = data.response.venue;
     // TODO: look at best way to handle undefined values
     var content = {
-      name: venue.name,
-      phone: venue.contact.formattedPhone,
-      category: venue.categories[0].name,
+      name: venue.name || marker.title,
+      phone: venue.contact.formattedPhone || "None",
+      category: venue.categories[0].name || "None",
       imgUrl: venue.bestPhoto.prefix + '100x100' + venue.bestPhoto.suffix,
-      address: venue.location.formattedAddress
+      address: venue.location.formattedAddress || "None"
     };
     var formattedContent = '<div id="iw-foursquare-data">';
     formattedContent += '<div class="iw-header">';
