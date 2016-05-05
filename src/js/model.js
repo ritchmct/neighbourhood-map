@@ -45,6 +45,7 @@ var neighbourMap = neighbourMap || {};
       clearTimeout(yelpRequestTimeOut);
     }).fail(function() {
       errorCb('Yelp');
+      clearTimeout(yelpRequestTimeOut);
     });
   };
 
@@ -77,9 +78,11 @@ var neighbourMap = neighbourMap || {};
         clearTimeout(foursquareRequestTimeOut);
       }).fail(function() {
         errorCb('Foursquare');
+        clearTimeout(foursquareRequestTimeOut);
       });
     }).fail(function() {
       errorCb('Foursquare');
+      clearTimeout(foursquareRequestTimeOut);
     });
   };
 

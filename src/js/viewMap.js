@@ -45,10 +45,8 @@ var neighbourMap = neighbourMap || {};
       });
 
       // When marker is clicked run a function to retrieve data
-      console.log(place.marker);
       place.marker.addListener('click', function() {
-        console.log("marker clicked");
-        o.viewMap.getData(place);
+         o.viewMap.getData(place);
       });
 
     });
@@ -89,19 +87,19 @@ var neighbourMap = neighbourMap || {};
     $(".iw-links").append(formattedContent);
     $("#iw-yelp-vis").on("click", function(e){
       if (e.toElement.innerHTML === "show") {
-        $("#iw-yelp-data").show();
+        $(".iw-yelp-data").show();
         e.toElement.innerHTML = "hide";
       } else {
-        $("#iw-yelp-data").hide();
+        $(".iw-yelp-data").hide();
         e.toElement.innerHTML = "show";
       }
     });
     $("#iw-foursquare-vis").on("click", function(e){
       if (e.toElement.innerHTML === "show") {
-        $("#iw-foursquare-data").show();
+        $(".iw-foursquare-data").show();
         e.toElement.innerHTML = "hide";
       } else {
-        $("#iw-foursquare-data").hide();
+        $(".iw-foursquare-data").hide();
         e.toElement.innerHTML = "show";
       }
     });
@@ -109,7 +107,6 @@ var neighbourMap = neighbourMap || {};
 
   function yelpSuccess(data) {
     var e0 = data.businesses[0];
-    // TODO: look at best way to handle undefined values
     var content = {
       name: e0.name || marker.title,
       phone: e0.display_phone || "None",
@@ -117,7 +114,7 @@ var neighbourMap = neighbourMap || {};
       imgRatingUrl: e0.rating_img_url_small,
       address: e0.location.display_address || "None"
     };
-    var formattedContent = '<div id="iw-yelp-data">';
+    var formattedContent = '<div class="iw-yelp-data">';
     formattedContent += '<div class="iw-header"><h3>' + content.name + '</h3></div>';
     formattedContent += '<div class="iw-data"><div class="iw-picture"><img src="' + content.imgUrl + '" ';
     formattedContent += 'alt="Picture from yelp"></div>';
@@ -130,7 +127,6 @@ var neighbourMap = neighbourMap || {};
 
   function foursquareSuccess(data) {
     var venue = data.response.venue;
-    // TODO: look at best way to handle undefined values
     var content = {
       name: venue.name || marker.title,
       phone: venue.contact.formattedPhone || "None",
@@ -138,7 +134,7 @@ var neighbourMap = neighbourMap || {};
       imgUrl: venue.bestPhoto.prefix + '100x100' + venue.bestPhoto.suffix,
       address: venue.location.formattedAddress || "None"
     };
-    var formattedContent = '<div id="iw-foursquare-data">';
+    var formattedContent = '<div class="iw-foursquare-data">';
     formattedContent += '<div class="iw-header">';
     formattedContent += '<h3>' + content.name + '</h3></div>';
     formattedContent += '<div class="iw-data"><div class="iw-picture"><img src="' + content.imgUrl + '" ';
@@ -151,8 +147,13 @@ var neighbourMap = neighbourMap || {};
   }
 
   function requestFailed(data) {
-    infoWindow.setContent('<p>Failed to retrieve data from ' + data + '</p>');
-    infoWindow.open(map, marker);
+    if (data === "Yelp") {
+      var formattedContent = '<div class="iw-yelp-data">';
+    } else {
+      var formattedContent = '<div class="iw-foursquare-data">';
+    }
+    formattedContent += '<p>Failed to retrieve data from ' + data + '</p></div>';
+    $(".iw-main").append(formattedContent);
   }
 
 })(neighbourMap);
