@@ -5,7 +5,7 @@ var neighbourMap = neighbourMap || {};
   o.viewMap = o.viewMap || {};
 
   // Make these variables accessible from outside of initMap
-  var map, infoWindow, marker;
+  var map, infoWindow, overlay;
 
   // Create initial map
   o.viewMap.initMap = function() {
@@ -27,6 +27,14 @@ var neighbourMap = neighbourMap || {};
       }
     });
 
+    // Create an overlay so that we can use it later to get
+    // pixel locations of markers
+    // Credit to "Flarex" solution in StackOverflow:
+    // http://stackoverflow.com/questions/2674392
+    overlay = new google.maps.OverlayView();
+    overlay.draw = function() {};
+    overlay.setMap(map);
+
     // Just create a single infoWindow that will be shared by all markers
     infoWindow = new google.maps.InfoWindow({
       content: 'No data to display'
@@ -46,7 +54,7 @@ var neighbourMap = neighbourMap || {};
 
       // When marker is clicked run a function to retrieve data
       place.marker.addListener('click', function() {
-         o.viewMap.getData(place);
+        o.viewMap.getData(place);
       });
 
     });
@@ -62,22 +70,32 @@ var neighbourMap = neighbourMap || {};
     }
   }
 
+  // Shift the map down when required so that the InfoWindow
+  // displays below the Neighbourhood Map header
+  function shiftMapDown(marker) {
+    var proj = overlay.getProjection();
+    var pos = marker.getPosition();
+    var p = proj.fromLatLngToContainerPixel(pos);
+    if (p.y < 500) {
+      map.panBy(0, p.y - 500);
+    }
+  }
+
+  // Retrieve data about Marker and display in InfoWindow
   // This function needs global visibility as it is called from viewModel too
   o.viewMap.getData = function(place) {
-    marker = place.marker;
+    var marker = place.marker;
+
     // Create a neighbourMap global variable to reference marker
     // that is currently associated with the infoWindow
     o.viewMap.infoWindowMarker = marker;
+    shiftMapDown(marker);
     toggleBounce(marker);
     neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, requestFailed);
     neighbourMap.model.foursquareRequest(place.name(), place.location, foursquareSuccess, requestFailed);
     var formattedContent = '<div class="iw-main"></div>';
     infoWindow.setContent(formattedContent);
     infoWindow.open(map, marker);
-    // Move map down by 200 pixels to ensure top of InfoWindow is visible
-    // This solution is quick and dirty. Could look at pixel location of marker
-    // and just moving display down by required amount.
-    map.panBy(0,-200);
     formattedContent = '<div class="iw-links"></div>';
     $(".iw-main").append(formattedContent);
     formattedContent = '<span id="iw-yelp">Yelp: </span>';
@@ -85,7 +103,7 @@ var neighbourMap = neighbourMap || {};
     formattedContent += '<span id="iw-foursquare">Foursquare: </span>';
     formattedContent += '<span id="iw-foursquare-vis">hide</span>';
     $(".iw-links").append(formattedContent);
-    $("#iw-yelp-vis").on("click", function(e){
+    $("#iw-yelp-vis").on("click", function(e) {
       if (e.toElement.innerHTML === "show") {
         $(".iw-yelp-data").show();
         e.toElement.innerHTML = "hide";
@@ -94,7 +112,7 @@ var neighbourMap = neighbourMap || {};
         e.toElement.innerHTML = "show";
       }
     });
-    $("#iw-foursquare-vis").on("click", function(e){
+    $("#iw-foursquare-vis").on("click", function(e) {
       if (e.toElement.innerHTML === "show") {
         $(".iw-foursquare-data").show();
         e.toElement.innerHTML = "hide";
@@ -108,7 +126,7 @@ var neighbourMap = neighbourMap || {};
   function yelpSuccess(data) {
     var e0 = data.businesses[0];
     var content = {
-      name: e0.name || marker.title,
+      name: e0.name || o.viewMap.infoWindowMarker.title,
       phone: e0.display_phone || "None",
       imgUrl: e0.image_url,
       imgRatingUrl: e0.rating_img_url_small,
@@ -128,7 +146,7 @@ var neighbourMap = neighbourMap || {};
   function foursquareSuccess(data) {
     var venue = data.response.venue;
     var content = {
-      name: venue.name || marker.title,
+      name: venue.name || o.viewMap.infoWindowMarker.title,
       phone: venue.contact.formattedPhone || "None",
       category: venue.categories[0].name || "None",
       imgUrl: venue.bestPhoto.prefix + '100x100' + venue.bestPhoto.suffix,
