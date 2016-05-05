@@ -76,6 +76,10 @@ var neighbourMap = neighbourMap || {};
     var formattedContent = '<div class="iw-main"></div>';
     infoWindow.setContent(formattedContent);
     infoWindow.open(map, marker);
+    // Move map down by 200 pixels to ensure top of InfoWindow is visible
+    // This solution is quick and dirty. Could look at pixel location of marker
+    // and just moving display down by required amount.
+    map.panBy(0,-200);
     formattedContent = '<div class="iw-links"></div>';
     $(".iw-main").append(formattedContent);
     formattedContent = '<span id="iw-yelp">Yelp: </span>';
