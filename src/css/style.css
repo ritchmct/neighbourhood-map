@@ -100,15 +100,34 @@ body {
   flex-direction: column;
 }
 
-@media only screen and (max-width: 400px) {
+/*
+Media rules to improve InfoWindow display on narrow devices
+*/
+@media only screen and (max-width: 420px) {
   .iw-main {
     width: 250px;
+  }
+  /*
+  Not sure excatly why but the text input field on physical phones
+  is sometimes being displayed too wide.
+  Forcing a fixed width resolves it but there may be a better way
+  */
+  input[type="text"] {
+    width: 220px;
   }
 }
 
 @media only screen and (max-width: 350px) {
   .iw-main {
     width: 200px;
+  }
+  /*
+  Not sure excatly why but the text input field on physical phones
+  is sometimes being displayed too wide.
+  Forcing a fixed width resolves it but there may be a better way
+  */
+  input[type="text"] {
+    width: 220px;
   }
 }
 
