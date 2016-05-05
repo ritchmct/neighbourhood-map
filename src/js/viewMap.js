@@ -29,7 +29,7 @@ var neighbourMap = neighbourMap || {};
 
     // Create an overlay so that we can use it later to get
     // pixel locations of markers
-    // Credit to "Flarex" solution in StackOverflow:
+    // Credit: "Flarex" solution in StackOverflow:
     // http://stackoverflow.com/questions/2674392
     overlay = new google.maps.OverlayView();
     overlay.draw = function() {};
@@ -85,19 +85,28 @@ var neighbourMap = neighbourMap || {};
   // This function needs global visibility as it is called from viewModel too
   o.viewMap.getData = function(place) {
     var marker = place.marker;
-
     // Create a neighbourMap global variable to reference marker
     // that is currently associated with the infoWindow
     o.viewMap.infoWindowMarker = marker;
     shiftMapDown(marker);
     toggleBounce(marker);
-    neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, requestFailed);
-    neighbourMap.model.foursquareRequest(place.name(), place.location, foursquareSuccess, requestFailed);
+    // Create initial content for InfoWindow and then open the InfoWindow for the Marker
     var formattedContent = '<div class="iw-main"></div>';
     infoWindow.setContent(formattedContent);
     infoWindow.open(map, marker);
-    formattedContent = '<div class="iw-links"></div>';
-    $(".iw-main").append(formattedContent);
+    // Request data from Yelp and Foursquare
+    // These are asynchronous requests and the retrieved data
+    // are handled by the yelpSuccess and foursquareSuccess callback functions
+    neighbourMap.model.yelpRequest(place.name(), neighbourMap.model.city, yelpSuccess, requestFailed);
+    neighbourMap.model.foursquareRequest(place.name(), place.location, foursquareSuccess, requestFailed);
+    displayInfoWindowLinks();
+  };
+
+  // Add a header line to the InfoWindow that can be used to
+  // Show/Hide the data from Yelp and Foursquare
+  function displayInfoWindowLinks() {
+    var formattedContent = '<div class="iw-links"></div>';
+    $(".iw-main").prepend(formattedContent);
     formattedContent = '<span id="iw-yelp">Yelp: </span>';
     formattedContent += '<span id="iw-yelp-vis">hide</span>';
     formattedContent += '<span id="iw-foursquare">Foursquare: </span>';
@@ -121,8 +130,9 @@ var neighbourMap = neighbourMap || {};
         e.toElement.innerHTML = "show";
       }
     });
-  };
+  }
 
+  // Callback function to display Yelp data in InfoWindow
   function yelpSuccess(data) {
     var e0 = data.businesses[0];
     var content = {
@@ -143,6 +153,7 @@ var neighbourMap = neighbourMap || {};
     $(".iw-main").append(formattedContent);
   }
 
+  // Callback function to display Foursquare data in InfoWindow
   function foursquareSuccess(data) {
     var venue = data.response.venue;
     var content = {
@@ -164,6 +175,8 @@ var neighbourMap = neighbourMap || {};
     $(".iw-main").append(formattedContent);
   }
 
+  // Callback function to display error message in InfoWindow
+  // if data can not be retrieved via Yelp or Foursquare APIs
   function requestFailed(data) {
     if (data === "Yelp") {
       var formattedContent = '<div class="iw-yelp-data">';
