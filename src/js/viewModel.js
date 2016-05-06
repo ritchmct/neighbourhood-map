@@ -31,9 +31,11 @@ var neighbourMap = neighbourMap || {};
 
     // Function called when hamburger icon clicked
     self.toggleListVisible = function() {
-      self.listVisible() ?
-        self.listVisible(false) :
+      if ( self.listVisible() ) {
+        self.listVisible(false);
+      } else {
         self.listVisible(true);
+      }
     };
 
     // Initialize text in filter input

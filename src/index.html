@@ -7,8 +7,10 @@
   <meta name="description" content="Neighbourhood mad to demonstrate use of AJAX and knockoutjs">
   <meta name="author" content="Ritchie Diaper">
   <title>Neighbourhood Map</title>
+  <!-- build:css css/main.min.css -->
   <link href="css/style.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet" type="text/css">
+  <link href="css/fonts.css" rel="stylesheet">
+  <!-- endbuild -->
 </head>
 
 <body>
@@ -33,6 +35,7 @@
     </div>
   </div>
   <div id="map"></div>
+  <!-- build:js js/combined.min.js -->
   <script src="js/libs/jquery-2.2.1.min.js"></script>
   <script src="js/libs/knockout-3.4.0.js"></script>
   <script src="js/libs/sha1.js"></script>
@@ -40,6 +43,7 @@
   <script src="js/model.js"></script>
   <script src="js/viewModel.js"></script>
   <script src="js/viewMap.js"></script>
+  <!-- endbuild -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvTqqqQmN6DRkaYvp23R-_YZCSgzG6Itg&region=GB&callback=neighbourMap.viewMap.initMap" async defer>
   </script>
 </body>

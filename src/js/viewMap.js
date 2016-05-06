@@ -178,10 +178,11 @@ var neighbourMap = neighbourMap || {};
   // Callback function to display error message in InfoWindow
   // if data can not be retrieved via Yelp or Foursquare APIs
   function requestFailed(data) {
+    var formattedContent;
     if (data === "Yelp") {
-      var formattedContent = '<div class="iw-yelp-data">';
+      formattedContent = '<div class="iw-yelp-data">';
     } else {
-      var formattedContent = '<div class="iw-foursquare-data">';
+      formattedContent = '<div class="iw-foursquare-data">';
     }
     formattedContent += '<p>Failed to retrieve data from ' + data + '</p></div>';
     $(".iw-main").append(formattedContent);
