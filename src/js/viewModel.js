@@ -11,13 +11,14 @@ var neighbourMap = neighbourMap || {};
     this.visible = ko.observable(true);
   };
 
+  // Define ViewModel
   var ViewModel = function() {
     var self = this;
 
     // List view. Not visible to start with
     self.listVisible = ko.observable(false);
 
-    // Populate am observable array with all the places defined in the model
+    // Populate an observable array with all the places defined in the model
     self.placeList = ko.observableArray();
     neighbourMap.model.initialPlaces.forEach(function(place) {
       self.placeList.push(new Place(place));
