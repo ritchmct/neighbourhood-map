@@ -8,9 +8,12 @@ You will develop a single-page application featuring a map of your neighborhood 
 
 ### Scripts
 
-**model.js** - contains the initial data about the places in addition to the AJAX calls to the Yelp and Foursquare APIs to retrieve additional data
+**model.js** - contains the initial data about the places in addition to the AJAX calls to the Yelp and Foursquare APIs to retrieve additional data.
+<br>
 **viewModel.js**
+<br>
 **viewMap.js**
+<br>
 
 ### Libraries
 
