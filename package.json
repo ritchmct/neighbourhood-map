@@ -1,0 +1,31 @@
+{
+  "name": "neighbourhood-map",
+  "version": "1.0.0",
+  "description": "Udacity Neighbourhood Map project",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "browser-sync": "^2.12.5",
+    "gulp-htmlmin": "^2.0.0",
+    "gulp-cssnano": "^2.1.2",
+    "del": "^2.2.0",
+    "gulp-uglify": "^1.5.3",
+    "gulp-if": "^2.0.1",
+    "gulp-useref": "^3.1.0",
+    "run-sequence": "^1.1.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ritchmct/neighbourhood-map.git"
+  },
+  "author": "Ritchie Diaper",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ritchmct/neighbourhood-map/issues"
+  },
+  "homepage": "https://github.com/ritchmct/neighbourhood-map#readme"
+}
