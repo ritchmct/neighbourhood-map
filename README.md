@@ -6,6 +6,8 @@ You will develop a single-page application featuring a map of your neighborhood 
 
 ## The Implementation
 
+### Installation
+
 ### Scripts
 
 **model.js** - contains the initial data about the places in addition to the AJAX calls to the Yelp and Foursquare APIs to retrieve additional data.
@@ -17,10 +19,9 @@ You will develop a single-page application featuring a map of your neighborhood 
 
 ### Libraries
 
-**knockout.js**
-**jQuery**
-**sha1**
-**oauth**
+[Knockout.js](http://knockoutjs.com/) - Used in the implementation of the list of places<br>
+[jQuery](http://jquery.com/) - Used for ajax calls in model.js and for ease of DOM manipulation in viewMap.js<br>
+[oauth](https://oauth.googlecode.com/svn/code/javascript/) - JavaScript software for implementing an OAuth consumer. Author: John Kristian. Used to authorize AJAX calls to Yelp
 
 ### APIs
 
@@ -34,4 +35,6 @@ You will develop a single-page application featuring a map of your neighborhood 
 The active **dist** site can be viewed [here](http://ritchmct.github.io/neighbourhood-map/dist/index.html)
 
 ## License
+
+MIT
 
