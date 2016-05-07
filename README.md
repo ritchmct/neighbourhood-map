@@ -2,7 +2,6 @@
 ## The Challenge
 You will develop a single-page application featuring a map of your neighborhood or a neighborhood you would like to visit. You will then add additional functionality to this application, including: map markers to identify popular locations or places you’d like to visit, a search function to easily discover these locations, and a listview to support simple browsing of all locations. You will then research and implement third-party APIs that provide additional information about each of these locations (such as StreetView images, Wikipedia articles, Yelp reviews, etc).
 ## The Implementation
-### Installation
 ### Scripts
 **model.js** - contains the initial data about the places in addition to the AJAX calls to the Yelp and Foursquare APIs to retrieve additional data.
 <br>
@@ -15,11 +14,17 @@ You will develop a single-page application featuring a map of your neighborhood 
 [jQuery](http://jquery.com/) - Used for ajax calls in model.js and for ease of DOM manipulation in viewMap.js<br>
 [oauth](https://oauth.googlecode.com/svn/code/javascript/) - JavaScript software for implementing an OAuth consumer. Author: John Kristian. Used to authorize AJAX calls to Yelp
 ### APIs
-**Google Maps API**
-**Yelp API**
-**Foursquare API**
-### Build
+[Google Maps API](https://developers.google.com/maps/)<br>
+[Yelp API](https://www.yelp.com/developers/documentation/v2/overview)<br>
+[Foursquare API](https://developer.foursquare.com/)
+## Build
+A **gulp** build workflow is used to create the **dist** tree from the original **src**<br>
+**gulp-htmlmin**, **gulp-cssnano**, **gulp-uglify** and **gulp-useref** are used to minify all html, css and javascript.<br>
+**gulp-jshint** is used to check JavaScript syntax.<br>
+`gulp build` - checks JavaScript syntax and creates the **dist** tree
 The active **dist** site can be viewed [here](http://ritchmct.github.io/neighbourhood-map/dist/index.html)
+## Installation
+This is a single page website. Copying the contents of the dist directory (maintaining the directory structure) to a web server will complete installation.
 ## License
 This project is licensed under the terms of the MIT license
 
