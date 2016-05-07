@@ -18,13 +18,14 @@ You will develop a single-page application featuring a map of your neighborhood 
 [Yelp API](https://www.yelp.com/developers/documentation/v2/overview)<br>
 [Foursquare API](https://developer.foursquare.com/)
 ## Build
-A **gulp** build workflow is used to create the **dist** tree from the original **src**<br>
+A **gulp** workflow is used to create the **dist** tree from the original **src**<br>
 **gulp-htmlmin**, **gulp-cssnano**, **gulp-uglify** and **gulp-useref** are used to minify all html, css and javascript.<br>
-**gulp-jshint** is used to check JavaScript syntax.<br>
-`gulp build` - checks JavaScript syntax and creates the **dist** tree
+**gulp-jshint** is used to check JavaScript syntax.
+
+
 The active **dist** site can be viewed [here](http://ritchmct.github.io/neighbourhood-map/dist/index.html)
 ## Installation
-This is a single page website. Copying the contents of the dist directory (maintaining the directory structure) to a web server will complete installation.
+This is a single-page web application. Copying the contents of the dist directory (maintaining the directory structure) to a web server will complete installation.
 ## License
 This project is licensed under the terms of the MIT license
 
