@@ -124,6 +124,24 @@ var neighbourMap = neighbourMap || {};
     name: 'Scott Monument',
     location: { lat: +55.952381, lng: -3.1932741 }
   }, {
+    name: 'Hibs Football Club',
+    location: { lat: +55.961834, lng: -3.165275 }
+  }, {
+    name: 'Murrayfield Stadium',
+    location: { lat: +55.942512, lng: -3.241160 }
+  }, {
+    name: 'Hearts Football Club',
+    location: { lat: +55.939075, lng: -3.232234 }
+  }, {
+    name: 'National Museum of Scotland',
+    location: { lat: +55.946831, lng: -3.190632 }
+  }, {
+    name: 'Holyrood Palace',
+    location: { lat: +55.952581, lng: -3.171766 }
+  }, {
+    name: 'Waverley Station',
+    location: { lat: +55.951788, lng: -3.190477 }
+  }, {
     name: 'Dynamic Earth',
     location: { lat: +55.9505575, lng: -3.1744426 }
   }];
