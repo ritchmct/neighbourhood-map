@@ -96,13 +96,22 @@ svg {
 
 .iw-main {
   width: 300px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
   flex-direction: column;
 }
+
 
 /*
 Media rules to improve InfoWindow display on narrow devices
 */
+
 @media only screen and (max-width: 420px) {
   .iw-main {
     width: 250px;
@@ -157,7 +166,14 @@ Media rules to improve InfoWindow display on narrow devices
 .iw-data {
   margin-top: 10px;
   border-top: 1px solid;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
   flex-direction: row;
 }
 
