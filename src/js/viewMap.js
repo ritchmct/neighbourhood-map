@@ -113,21 +113,21 @@ var neighbourMap = neighbourMap || {};
     formattedContent += '<span id="iw-foursquare-vis">hide</span>';
     $(".iw-links").append(formattedContent);
     $("#iw-yelp-vis").on("click", function(e) {
-      if (e.toElement.innerHTML === "show") {
+      if (e.target.innerHTML === "show") {
         $(".iw-yelp-data").show();
-        e.toElement.innerHTML = "hide";
+        e.target.innerHTML = "hide";
       } else {
         $(".iw-yelp-data").hide();
-        e.toElement.innerHTML = "show";
+        e.target.innerHTML = "show";
       }
     });
     $("#iw-foursquare-vis").on("click", function(e) {
-      if (e.toElement.innerHTML === "show") {
+      if (e.target.innerHTML === "show") {
         $(".iw-foursquare-data").show();
-        e.toElement.innerHTML = "hide";
+        e.target.innerHTML = "hide";
       } else {
         $(".iw-foursquare-data").hide();
-        e.toElement.innerHTML = "show";
+        e.target.innerHTML = "show";
       }
     });
   }
