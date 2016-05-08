@@ -21,7 +21,8 @@ This project has been completed using the [Knockout.js](http://knockoutjs.com/) 
 ## Build
 A **gulp** workflow is used to create the **dist** tree from the original **src**<br>
 **gulp-htmlmin**, **gulp-cssnano**, **gulp-uglify** and **gulp-useref** are used to minify all html, css and javascript.<br>
-**gulp-jshint** is used to check JavaScript syntax.
+**gulp-jshint** is used to check JavaScript syntax.<br>
+`gulp build` command will clear the **dist** directory, check JavaScript syntax, and then recreate the **dist** directory.
 
 
 The active **dist** site can be viewed [here](http://ritchmct.github.io/neighbourhood-map/dist/index.html)
