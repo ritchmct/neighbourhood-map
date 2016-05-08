@@ -46,9 +46,9 @@ body {
   padding: 1em;
 }
 
-#header-menu svg {
+svg {
   width: 32px;
-  fill: #555;
+  fill: currentColor;
 }
 
 #filter-list {
