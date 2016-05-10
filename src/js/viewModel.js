@@ -59,7 +59,8 @@ var neighbourMap = neighbourMap || {};
     // Closes infoWindow if it's marker is removed
     self.filterPlaceList = function() {
       self.placeList().forEach(function(place) {
-        if (place.name().search(self.filterText()) > -1) {
+        // Make search case insensitive
+        if (place.name().toLowerCase().search(self.filterText().toLowerCase()) > -1) {
           place.visible(true);
           place.marker.setVisible(true);
         } else {
@@ -79,8 +80,10 @@ var neighbourMap = neighbourMap || {};
     // Results in data being displayed on map. Same as if the marker had been clicked
     self.selectPlace = function(clickedPlace) {
       neighbourMap.viewMap.getData(clickedPlace);
-      // Remove the list so that it doesn't obstruct view of InfoWindow
-      self.listVisible(false);
+      // Remove the list on narrow displays so that it doesn't obstruct view of InfoWindow
+      if ( $(document).width() < 700 ) {
+        self.listVisible(false);
+      }
     };
   };
 

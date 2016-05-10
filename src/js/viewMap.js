@@ -83,17 +83,20 @@ var neighbourMap = neighbourMap || {};
     }
   }
 
-  // Shift the map down when required so that the InfoWindow
-  // displays below the Neighbourhood Map header
-  function shiftMapDown(marker) {
+  // Shift the map so that Marker x and y pixel position
+  // is a minimum of xmin and ymin
+  function shiftMap(marker, xmin, ymin) {
     var proj = overlay.getProjection();
     var pos = marker.getPosition();
     var p = proj.fromLatLngToContainerPixel(pos);
-    if (p.y < 500) {
-      map.panBy(0, p.y - 500);
-    }
+    var xoffset = 0;
+    var yoffset = 0;
+    // Don't move if not necessary but do move if Marker
+    // is not currently on displayed section of map
+    if (p.x < xmin || p.x > $(document).width() || p.x < 0 ) { xoffset = p.x - xmin; }
+    if (p.y < ymin || p.y > $(document).height() || p.y < 0) { yoffset = p.y - ymin; }
+    if (xoffset !== 0 || yoffset !== 0) { map.panBy(xoffset, yoffset); }
   }
-
   // Retrieve data about Marker and display in InfoWindow
   // This function needs global visibility as it is called from viewModel too
   o.viewMap.getData = function(place) {
@@ -101,7 +104,13 @@ var neighbourMap = neighbourMap || {};
     // Create a neighbourMap global variable to reference marker
     // that is currently associated with the infoWindow
     o.viewMap.infoWindowMarker = marker;
-    shiftMapDown(marker);
+    if ( $(document).width() < 700 ) {
+      // On narrow screens shift the map down so that top of InfoWindow is displayed
+      shiftMap(marker, 0, 500);
+    } else {
+      // On wider screens shift the map right as well so InfoWindow is away from place list
+      shiftMap(marker, 500, 500);
+    }
     toggleBounce(marker);
     // Create initial content for InfoWindow and then open the InfoWindow for the Marker
     var formattedContent = '<div class="iw-main"></div>';
