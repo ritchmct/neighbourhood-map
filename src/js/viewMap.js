@@ -5,14 +5,14 @@ var neighbourMap = neighbourMap || {};
   o.viewMap = o.viewMap || {};
 
   // Make these variables accessible from outside of initMap
-  var map, infoWindow, overlay;
+  var map, infoWindow, overlay, bounds;
 
   // Create initial map
   o.viewMap.initMap = function() {
 
     map = new google.maps.Map(document.getElementById('map'), {
       center: neighbourMap.model.centerLocation,
-      zoom: 14,
+      zoom: 14, // Not strictly required as map will be fitted to markers
       disableDefaultUI: true,
       zoomControl: true,
       mapTypeControl: true,
@@ -43,6 +43,11 @@ var neighbourMap = neighbourMap || {};
     // Make infoWindow globally available to neighbourMap
     o.viewMap.infoWindow = infoWindow;
 
+    // Create a LatLngBounds object that can be extended with the locations
+    // of all Markers
+    var bounds = new google.maps.LatLngBounds();
+    var markerLatLng;
+
     // Create a marker for each place in the placeList
     neighbourMap.viewModel.ViewModel.placeList().forEach(function(place) {
       place.marker = new google.maps.Marker({
@@ -57,8 +62,16 @@ var neighbourMap = neighbourMap || {};
         o.viewMap.getData(place);
       });
 
+      // Create LatLng object from place position and use it to extend the map bounds
+      markerLatLng = new google.maps.LatLng(place.location.lat, place.location.lng);
+      bounds.extend(markerLatLng);
     });
+
+    // Fit the map to show all Markers
+    map.fitBounds(bounds);
   };
+
+
 
   // Bounce the marker for a short period
   function toggleBounce(marker) {
