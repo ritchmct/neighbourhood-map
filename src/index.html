@@ -14,7 +14,7 @@
 </head>
 
 <body>
-  <div id="header">
+  <div id="header" data-bind="visible: headerVisible">
     <h1 id="header-title">
           Neighbourhood Map
       </h1>
@@ -35,6 +35,9 @@
     </div>
   </div>
   <div id="map"></div>
+  <div class="map-error" data-bind="visible: mapErrorVisible">
+    <p>Error encountered with Google Maps API.<br>Please refresh or try again later.</p>
+  </div>
   <!-- build:js js/combined.min.js defer-->
   <script src="js/libs/jquery-2.2.1.min.js"></script>
   <script src="js/libs/knockout-3.4.0.js"></script>
@@ -44,8 +47,8 @@
   <script src="js/viewModel.js"></script>
   <script src="js/viewMap.js"></script>
   <!-- endbuild -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvTqqqQmN6DRkaYvp23R-_YZCSgzG6Itg&region=GB&callback=neighbourMap.viewMap.initMap" defer>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBvTqqqQmN6DRkaYvp23R-_YZCSgzG6Itg&region=GB&callback=neighbourMap.viewMap.initMap" defer onerror="neighbourMap.viewModel.ViewModel.mapError()">
   </script>
-</body>
+ </body>
 
 </html>

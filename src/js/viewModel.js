@@ -15,6 +15,17 @@ var neighbourMap = neighbourMap || {};
   var ViewModel = function() {
     var self = this;
 
+    // Normal situation when Google API responding
+    self.headerVisible = ko.observable(true);
+    self.mapErrorVisible = ko.observable(false);
+
+    // Function called for Google API onerror condition (index.html)
+    // Hides normal header and displays an error message instead
+    self.mapError = function() {
+      self.headerVisible(false);
+      self.mapErrorVisible(true);
+    };
+
     // List view. Not visible to start with
     self.listVisible = ko.observable(false);
 
