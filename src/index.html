@@ -24,7 +24,7 @@
       </svg>
     </div>
   </div>
-  <div id="list" data-bind="visible: listVisible">
+  <div class="hidden" id="list" data-bind="visible: listVisible, css: {hidden: false}">
     <div id="filter-list">Filter:
       <input id="filter" type="text" data-bind="textInput: filterText, event: {keyup: filterPlaceList}">
     </div>
