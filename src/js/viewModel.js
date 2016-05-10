@@ -18,12 +18,14 @@ var neighbourMap = neighbourMap || {};
     // Normal situation when Google API responding
     self.headerVisible = ko.observable(true);
     self.mapErrorVisible = ko.observable(false);
+    self.mapErrorMsg = ko.observable();
 
     // Function called for Google API onerror condition (index.html)
     // Hides normal header and displays an error message instead
     self.mapError = function() {
       self.headerVisible(false);
       self.mapErrorVisible(true);
+      self.mapErrorMsg("<p>Error encountered with Google Maps API.<br>Please refresh or try again later.</p>");
     };
 
     // List view. Not visible to start with

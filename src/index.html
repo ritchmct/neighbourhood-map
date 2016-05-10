@@ -35,8 +35,7 @@
     </div>
   </div>
   <div id="map"></div>
-  <div class="map-error" data-bind="visible: mapErrorVisible">
-    <p>Error encountered with Google Maps API.<br>Please refresh or try again later.</p>
+  <div class="map-error" data-bind="visible: mapErrorVisible, html: mapErrorMsg">
   </div>
   <!-- build:js js/combined.min.js defer-->
   <script src="js/libs/jquery-2.2.1.min.js"></script>
