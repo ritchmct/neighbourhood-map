@@ -120,12 +120,12 @@ var neighbourMap = neighbourMap || {};
   function displayInfoWindowLinks() {
     var formattedContent = '<div class="iw-links"></div>';
     $(".iw-main").prepend(formattedContent);
-    formattedContent = '<span id="iw-yelp">Yelp: </span>';
-    formattedContent += '<span id="iw-yelp-vis">hide</span>';
-    formattedContent += '<span id="iw-foursquare">Foursquare: </span>';
-    formattedContent += '<span id="iw-foursquare-vis">hide</span>';
+    formattedContent = '<span class="iw-yelp">Yelp: </span>';
+    formattedContent += '<span class="iw-yelp-vis">hide</span>';
+    formattedContent += '<span class="iw-foursquare">Foursquare: </span>';
+    formattedContent += '<span class="iw-foursquare-vis">hide</span>';
     $(".iw-links").append(formattedContent);
-    $("#iw-yelp-vis").on("click", function(e) {
+    $(".iw-yelp-vis").on("click", function(e) {
       if (e.target.innerHTML === "show") {
         $(".iw-yelp-data").show();
         e.target.innerHTML = "hide";
@@ -134,7 +134,7 @@ var neighbourMap = neighbourMap || {};
         e.target.innerHTML = "show";
       }
     });
-    $("#iw-foursquare-vis").on("click", function(e) {
+    $(".iw-foursquare-vis").on("click", function(e) {
       if (e.target.innerHTML === "show") {
         $(".iw-foursquare-data").show();
         e.target.innerHTML = "hide";
@@ -156,12 +156,14 @@ var neighbourMap = neighbourMap || {};
       address: e0.location.display_address || "None"
     };
     var formattedContent = '<div class="iw-yelp-data">';
-    formattedContent += '<div class="iw-header"><h3>' + content.name + '</h3></div>';
+    formattedContent += '<div class="iw-header">';
+    formattedContent += '<h3 class="iw-header-h3">' + content.name + '</h3></div>';
     formattedContent += '<div class="iw-data"><div class="iw-picture"><img src="' + content.imgUrl + '" ';
     formattedContent += 'alt="Picture from yelp"></div>';
-    formattedContent += '<div class="iw-detail"><ul><li>Rating: <img src="' + content.imgRatingUrl + '"></li>';
-    formattedContent += '<li> Phone: ' + content.phone + '</li>';
-    formattedContent += '<li> Address: ' + content.address + '</li>';
+    formattedContent += '<div class="iw-detail"><ul class="iw-detail-ul">';
+    formattedContent += '<li class="iw-detail-li">Rating: <img src="' + content.imgRatingUrl + '"></li>';
+    formattedContent += '<li class="iw-detail-li">Phone: ' + content.phone + '</li>';
+    formattedContent += '<li class="iw-detail-li">Address: ' + content.address + '</li>';
     formattedContent += '</ul></div></div></div>';
     $(".iw-main").append(formattedContent);
   }
@@ -178,12 +180,13 @@ var neighbourMap = neighbourMap || {};
     };
     var formattedContent = '<div class="iw-foursquare-data">';
     formattedContent += '<div class="iw-header">';
-    formattedContent += '<h3>' + content.name + '</h3></div>';
+    formattedContent += '<h3 class="iw-header-h3">' + content.name + '</h3></div>';
     formattedContent += '<div class="iw-data"><div class="iw-picture"><img src="' + content.imgUrl + '" ';
     formattedContent += 'alt="Picture from foursquare"></div>';
-    formattedContent += '<div class="iw-detail"><ul><li>Category: ' + content.category + '</li>';
-    formattedContent += '<li> Phone: ' + content.phone + '</li>';
-    formattedContent += '<li> Address: ' + content.address + '</li>';
+    formattedContent += '<div class="iw-detail"><ul class="iw-detail-ul">';
+    formattedContent += '<li class="iw-detail-li">Category: ' + content.category + '</li>';
+    formattedContent += '<li class="iw-detail-li">Phone: ' + content.phone + '</li>';
+    formattedContent += '<li class="iw-detail-li">Address: ' + content.address + '</li>';
     formattedContent += '</ul></div></div></div>';
     $(".iw-main").append(formattedContent);
   }

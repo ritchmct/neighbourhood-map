@@ -15,11 +15,15 @@ body {
   color: #555;
 }
 
+/*
+Used to prevent flashing of "visible: false"
+Knockoutjs content during initial page load
+*/
 .hidden {
   display: none;
 }
 
-#map {
+.map {
   height: 100%;
 }
 
@@ -33,9 +37,7 @@ body {
   margin: 1.5em;
 }
 
-#main {}
-
-#header {
+.header {
   background-color: #fff;
   position: absolute;
   left: 0px;
@@ -46,14 +48,14 @@ body {
   height: 60px;
 }
 
-#header-title {
+.header-title {
   display: inline-block;
   padding-left: 10px;
   font-size: 2em;
   vertical-align: bottom;
 }
 
-#header-menu {
+.header-menu {
   display: inline-block;
   position: absolute;
   right: 0;
@@ -65,8 +67,8 @@ svg {
   fill: currentColor;
 }
 
-#filter-list {
-  background-color: #FFF;
+.filter-list {
+  background-color: #fff;
   position: absolute;
   left: 0px;
   top: 60px;
@@ -79,13 +81,13 @@ svg {
   padding: 10px;
 }
 
-#filter {
+.filter {
   font-size: 1em;
 }
 
-#place-list {
+.place-list {
   position: absolute;
-  background-color: #FFF;
+  background-color: #fff;
   top: 110px;
   left: 0px;
   z-index: 1;
@@ -95,14 +97,14 @@ svg {
   overflow-y: auto;
 }
 
-#place-list ul {
+.place-list-ul {
   list-style: none;
   padding: 0px;
   margin: 0;
   font-size: 1.5em;
 }
 
-#place-list li {
+.place-list-li {
   padding: 10px;
   cursor: pointer;
   border-top: 1px solid;
@@ -160,12 +162,12 @@ Media rules to improve InfoWindow display on narrow devices
   color: blue;
 }
 
-#iw-foursquare {
+.iw-foursquare {
   padding-left: 10px;
 }
 
-#iw-yelp-vis,
-#iw-foursquare-vis {
+.iw-yelp-vis,
+.iw-foursquare-vis {
   text-decoration: underline;
 }
 
@@ -173,7 +175,7 @@ Media rules to improve InfoWindow display on narrow devices
   display: block;
 }
 
-.iw-header h3 {
+.iw-header-h3 {
   margin: 0px;
 }
 
@@ -204,13 +206,13 @@ Media rules to improve InfoWindow display on narrow devices
   border-left: 1px solid;
 }
 
-.iw-detail ul {
+.iw-detail-ul {
   padding: 0px;
   margin: 0px;
   list-style: none;
   font-size: 1em;
 }
 
-.iw-detail li {
+.iw-detail-li {
   font-size: 1em;
 }
